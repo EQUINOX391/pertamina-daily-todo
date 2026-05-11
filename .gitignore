@@ -1,0 +1,52 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE / Editor
+.vscode/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Node / React
+node_modules/
+dist/
+build/
+.vite/
+
+# .NET
+bin/
+obj/
+.vs/
+*.rsuser
+
+# ASP.NET / User secrets
+secrets.json
+
+# Database / local files
+*.db
+*.sqlite
+*.sqlite3
+*.bak
+
+# Test coverage
+coverage/
+TestResults/
+
+# Misc
+*.tmp
+*.temp
