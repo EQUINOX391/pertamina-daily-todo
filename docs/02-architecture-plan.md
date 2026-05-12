@@ -52,3 +52,25 @@ src/
 ## Design Principle
 
 Keep the project simple, readable, and realistic for a recruitment study case.
+
+## Backend Database Foundation
+
+The backend uses Entity Framework Core with SQL Server.
+
+Initial database tables:
+
+- Users
+- TodoItems
+
+Relationship:
+
+- One User can have many TodoItems.
+- Each TodoItem belongs to one User.
+
+The database context is registered through dependency injection in `Program.cs`.
+
+Local development database:
+
+```text
+Server=(localdb)\MSSQLLocalDB
+Database=PertaminaDailyTodoDb

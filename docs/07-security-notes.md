@@ -45,3 +45,15 @@ Examples:
 ## Security Trade-Off Notes
 
 For this study case, the project prioritizes simple and understandable security implementation while still showing awareness of real-world risks.
+
+## Database Foundation Decision
+
+- Date: 2026-05-11
+- Decision: Use SQL Server LocalDB for local development.
+- Reason:
+  - It is lightweight for local development on Windows.
+  - It works well with Visual Studio.
+  - It keeps the project aligned with the MSSQL requirement.
+- Impact:
+  - Local development uses `(localdb)\MSSQLLocalDB`.
+  - Production or reviewer environment can replace the connection string later.
