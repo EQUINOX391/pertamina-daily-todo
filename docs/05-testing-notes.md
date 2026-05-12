@@ -78,3 +78,43 @@ Conclusion:
 EF Core DbContext is configured successfully.
 SQL Server LocalDB connection is working.
 Initial database schema is ready for authentication and TODO features.
+
+## Backend Authentication Test
+
+Date: 2026-05-12
+
+Tooling:
+
+- Visual Studio 2022
+- ASP.NET Core Web API
+- SQL Server LocalDB
+- User Secrets
+- JWT Bearer Authentication
+
+Endpoints tested:
+
+- `POST /api/auth/register`
+- `POST /api/auth/login`
+
+Register request:
+
+```json```
+{
+  "fullName": "Egi Erlangga",
+  "email": "egi@example.com",
+  "password": "Password123!"
+}
+
+Expected result:
+
+API returns JWT token.
+API returns authenticated user data.
+Password is stored as a hash in the Users table.
+Plain text password is not stored.
+
+Conclusion:
+
+Register endpoint works.
+Login endpoint works.
+JWT token generation works.
+Password hashing works.

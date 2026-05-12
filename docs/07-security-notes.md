@@ -57,3 +57,12 @@ For this study case, the project prioritizes simple and understandable security 
 - Impact:
   - Local development uses `(localdb)\MSSQLLocalDB`.
   - Production or reviewer environment can replace the connection string later.
+
+## Authentication Security Notes
+
+- Passwords are never stored as plain text.
+- Passwords are stored using ASP.NET Core `PasswordHasher`.
+- JWT secret key is stored using User Secrets for local development.
+- JWT secret key is not committed to Git.
+- Login failure returns a generic message: `Invalid email or password.`
+- JWT validation includes issuer, audience, signing key, and token lifetime.
