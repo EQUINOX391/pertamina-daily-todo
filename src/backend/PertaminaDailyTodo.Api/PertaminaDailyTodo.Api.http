@@ -131,6 +131,18 @@ Content-Type: application/json
 
 ###
 
+POST {{host}}/api/todos
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "title": "   ",
+  "description": "Todo invalid karena title hanya spasi",
+  "dueDateUtc": "2026-05-15T10:00:00Z"
+}
+
+###
+
 GET {{host}}/api/todos/00000000-0000-0000-0000-000000000000
 Authorization: Bearer {{token}}
 Accept: application/json

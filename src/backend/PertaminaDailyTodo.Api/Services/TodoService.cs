@@ -45,15 +45,22 @@ public class TodoService : ITodoService
         return ToResponse(todoItem);
     }
 
-    public async Task<TodoResponse> CreateAsync(
-        Guid userId,
-        CreateTodoRequest request,
-        CancellationToken cancellationToken = default)
+    public async Task<TodoResponse?> CreateAsync(
+    Guid userId,
+    CreateTodoRequest request,
+    CancellationToken cancellationToken = default)
     {
+        var title = request.Title.Trim();
+
+        if (string.IsNullOrWhiteSpace(title))
+        {
+            return null;
+        }
+
         var todoItem = new TodoItem
         {
             UserId = userId,
-            Title = request.Title.Trim(),
+            Title = title,
             Description = string.IsNullOrWhiteSpace(request.Description)
                 ? null
                 : request.Description.Trim(),
@@ -69,11 +76,18 @@ public class TodoService : ITodoService
     }
 
     public async Task<TodoResponse?> UpdateAsync(
-        Guid userId,
-        Guid todoId,
-        UpdateTodoRequest request,
-        CancellationToken cancellationToken = default)
+    Guid userId,
+    Guid todoId,
+    UpdateTodoRequest request,
+    CancellationToken cancellationToken = default)
     {
+        var title = request.Title.Trim();
+
+        if (string.IsNullOrWhiteSpace(title))
+        {
+            return null;
+        }
+
         var todoItem = await _dbContext.TodoItems
             .FirstOrDefaultAsync(
                 todoItem => todoItem.Id == todoId && todoItem.UserId == userId,
@@ -84,7 +98,7 @@ public class TodoService : ITodoService
             return null;
         }
 
-        todoItem.Title = request.Title.Trim();
+        todoItem.Title = title;
         todoItem.Description = string.IsNullOrWhiteSpace(request.Description)
             ? null
             : request.Description.Trim();

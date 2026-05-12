@@ -64,9 +64,10 @@ public class TodosController : ControllerBase
     }
 
     [HttpPost]
+    [HttpPost]
     public async Task<IActionResult> Create(
-        CreateTodoRequest request,
-        CancellationToken cancellationToken)
+    CreateTodoRequest request,
+    CancellationToken cancellationToken)
     {
         if (!TryGetAuthenticatedUserId(out var userId))
         {
@@ -76,10 +77,26 @@ public class TodosController : ControllerBase
             });
         }
 
+        if (string.IsNullOrWhiteSpace(request.Title))
+        {
+            return BadRequest(new
+            {
+                message = "Todo title is required."
+            });
+        }
+
         var todo = await _todoService.CreateAsync(
             userId,
             request,
             cancellationToken);
+
+        if (todo is null)
+        {
+            return BadRequest(new
+            {
+                message = "Todo title is required."
+            });
+        }
 
         return CreatedAtAction(
             nameof(GetById),
@@ -89,15 +106,23 @@ public class TodosController : ControllerBase
 
     [HttpPut("{id:guid}")]
     public async Task<IActionResult> Update(
-        Guid id,
-        UpdateTodoRequest request,
-        CancellationToken cancellationToken)
+    Guid id,
+    UpdateTodoRequest request,
+    CancellationToken cancellationToken)
     {
         if (!TryGetAuthenticatedUserId(out var userId))
         {
             return Unauthorized(new
             {
                 message = "Invalid authentication token."
+            });
+        }
+
+        if (string.IsNullOrWhiteSpace(request.Title))
+        {
+            return BadRequest(new
+            {
+                message = "Todo title is required."
             });
         }
 

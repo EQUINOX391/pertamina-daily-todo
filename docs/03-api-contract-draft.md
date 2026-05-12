@@ -251,6 +251,7 @@ Request body:
 Validation rules:
 
 - `title` is required.
+- `title` must not be empty or whitespace only.
 - `title` maximum length is 150 characters.
 - `description` maximum length is 1000 characters.
 - `dueDateUtc` is optional.
@@ -308,6 +309,7 @@ Request body:
 Validation rules:
 
 - `title` is required.
+- `title` must not be empty or whitespace only.
 - `title` maximum length is 150 characters.
 - `description` maximum length is 1000 characters.
 - `isCompleted` is required.

@@ -229,6 +229,7 @@ Test cases:
 7. Request todo endpoint without token.
 8. Request todo with an unknown ID.
 9. Create todo with invalid title.
+10. Create todo with whitespace-only title.
 
 Expected results:
 
@@ -243,6 +244,7 @@ Expected results:
 | GET `/api/todos` without token | `401 Unauthorized` |
 | GET unknown todo ID | `404 Not Found` |
 | POST `/api/todos` with invalid title | `400 Bad Request` |
+| POST `/api/todos` with whitespace-only title | `400 Bad Request` |
 
 Example create request:
 
@@ -279,9 +281,59 @@ Protected Todo endpoints reject unauthenticated requests.
 
 Invalid Todo requests return validation errors.
 
+Whitespace-only todo titles are rejected with `400 Bad Request`.
+
 Notes:
 
 - `GET /api/todos` only returns todos owned by the authenticated user.
 - `GET /api/todos/{id}`, `PUT /api/todos/{id}`, and `DELETE /api/todos/{id}` return `404 Not Found` when the todo does not exist or does not belong to the authenticated user.
 - `POST /api/todos` returns `201 Created` when a todo is successfully created.
 - `DELETE /api/todos/{id}` returns `204 No Content` when delete succeeds.
+
+## TODO Validation Hardening Test
+
+Date: 2026-05-12
+
+Endpoint tested:
+
+```http
+POST /api/todos
+```
+
+Authentication:
+
+```http
+Authorization: Bearer <token>
+```
+
+Test case:
+
+```json
+{
+  "title": "   ",
+  "description": "Todo invalid karena title hanya spasi",
+  "dueDateUtc": "2026-05-15T10:00:00Z"
+}
+```
+
+Expected result:
+
+```http
+400 Bad Request
+```
+
+Expected response:
+
+```json
+{
+  "message": "Todo title is required."
+}
+```
+
+Result:
+
+The Todo API rejects whitespace-only titles.
+
+Todo title validation is handled before creating or updating Todo data.
+
+This prevents storing empty-looking Todo titles after trimming whitespace.

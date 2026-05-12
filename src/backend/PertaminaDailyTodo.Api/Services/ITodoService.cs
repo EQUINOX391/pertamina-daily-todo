@@ -13,7 +13,7 @@ public interface ITodoService
         Guid todoId,
         CancellationToken cancellationToken = default);
 
-    Task<TodoResponse> CreateAsync(
+    Task<TodoResponse?> CreateAsync(
         Guid userId,
         CreateTodoRequest request,
         CancellationToken cancellationToken = default);
