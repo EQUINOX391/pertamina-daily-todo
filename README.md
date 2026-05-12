@@ -107,14 +107,18 @@ pertamina-daily-todo/
 
 ## Development Status
 
+## Development Status
+
 - [x] Step 1: Initial project structure and documentation
 - [x] Step 2: Backend project setup
 - [x] Step 3: Database and Entity Framework setup
-- [ ] Step 4: Authentication API
-- [ ] Step 5: TODO CRUD API
-- [ ] Step 6: Frontend setup
-- [ ] Step 7: API integration
-- [ ] Step 8: Testing, polish, and final documentation
+- [x] Step 4: Authentication API
+- [x] Step 5: Protected TODO CRUD API
+- [x] Step 6: TODO title validation hardening
+- [ ] Step 7: Backend review and cleanup
+- [ ] Step 8: Frontend setup
+- [ ] Step 9: Frontend and API integration
+- [ ] Step 10: Final testing, polish, and documentation
 
 ## Notes
 

@@ -64,7 +64,6 @@ public class TodosController : ControllerBase
     }
 
     [HttpPost]
-    [HttpPost]
     public async Task<IActionResult> Create(
     CreateTodoRequest request,
     CancellationToken cancellationToken)
