@@ -4,10 +4,10 @@
 
 ### Authentication
 
-- [ ] Register with valid data
+- [x] Register with valid data
+- [x] Login with valid credentials
 - [ ] Register with duplicate email
 - [ ] Register with invalid email
-- [ ] Login with valid credentials
 - [ ] Login with wrong password
 - [ ] Access protected endpoint without token
 - [ ] Access protected endpoint with token
@@ -34,9 +34,10 @@ Date: 2026-05-11
 
 Command:
 
-```powershell```
+```powershell
 dotnet run --launch-profile http
 Invoke-RestMethod http://localhost:5190/api/health
+```
 
 status  service                timestampUtc
 ------  -------                ------------
@@ -61,10 +62,10 @@ Tooling:
 
 Commands:
 
-```powershell```
+```powershell
 Add-Migration InitialDatabase -OutputDir Data/Migrations
 Update-Database
-
+```
 Result:
 
 Database PertaminaDailyTodoDb created successfully.
@@ -98,12 +99,13 @@ Endpoints tested:
 
 Register request:
 
-```json```
+```json
 {
   "fullName": "Egi Erlangga",
   "email": "egi@example.com",
   "password": "Password123!"
 }
+```
 
 Expected result:
 
@@ -118,3 +120,13 @@ Register endpoint works.
 Login endpoint works.
 JWT token generation works.
 Password hashing works.
+
+## Pending Authentication Tests
+
+These tests should be completed before moving to TODO CRUD:
+
+- Register with duplicate email should return `400 Bad Request`.
+- Register with invalid email should return validation error.
+- Login with wrong password should return `401 Unauthorized`.
+- Protected endpoint without token should return `401 Unauthorized`.
+- Protected endpoint with valid token should return authenticated user data.

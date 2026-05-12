@@ -14,19 +14,36 @@ Request:
 
 ```json
 {
-  "name": "John Doe",
+  "fullName": "John Doe",
   "email": "john@example.com",
   "password": "Password123!"
 }
 ```
 
-Response:
+Validation rules:
+
+- `fullName` is required and has maximum length 100.
+- `email` is required, must be a valid email address, and has maximum length 255.
+- `password` is required, has minimum length 8, and maximum length 100.
+
+Response `201 Created`:
 
 ```json
 {
-  "message": "Registration successful"
+  "token": "jwt-token",
+  "expiresAtUtc": "2026-05-12T12:00:00Z",
+  "user": {
+    "id": "00000000-0000-0000-0000-000000000000",
+    "fullName": "John Doe",
+    "email": "john@example.com"
+  }
 }
 ```
+
+Possible errors:
+
+- `400 Bad Request` when email is already registered.
+- `400 Bad Request` when request validation fails.
 
 ### Login
 
@@ -43,14 +60,52 @@ Request:
 }
 ```
 
-Response:
+Validation rules:
+
+- `email` is required, must be a valid email address, and has maximum length 255.
+- `password` is required and has maximum length 100.
+
+Response `200 OK`:
 
 ```json
 {
   "token": "jwt-token",
-  "expiresAt": "2026-05-11T12:00:00Z"
+  "expiresAtUtc": "2026-05-12T12:00:00Z",
+  "user": {
+    "id": "00000000-0000-0000-0000-000000000000",
+    "fullName": "John Doe",
+    "email": "john@example.com"
+  }
 }
 ```
+
+Possible errors:
+
+- `401 Unauthorized` when email or password is invalid.
+- `400 Bad Request` when request validation fails.
+
+### Current Authenticated User
+
+Planned endpoint for completing the authentication foundation before TODO CRUD.
+
+```http
+GET /api/auth/me
+Authorization: Bearer <token>
+```
+
+Response `200 OK`:
+
+```json
+{
+  "id": "00000000-0000-0000-0000-000000000000",
+  "fullName": "John Doe",
+  "email": "john@example.com"
+}
+```
+
+Possible errors:
+
+- `401 Unauthorized` when token is missing, invalid, or expired.
 
 ## Todos
 

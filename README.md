@@ -118,4 +118,6 @@ pertamina-daily-todo/
 
 ## Notes
 
-EF Core version will be finalized during backend setup based on compatibility with the selected .NET SDK version.
+Backend setup currently uses ASP.NET Core Web API on .NET 10, Entity Framework Core 10.x, SQL Server LocalDB, and JWT Bearer authentication.
+
+EF Core 10 is used for this implementation because it matches the current .NET 10 project setup.

@@ -58,20 +58,40 @@ Accepted.
 
 ---
 
-## Decision 003: Verify EF Version During Backend Setup
+## Decision 003: Use EF Core 10 for Current Implementation
 
 ### Context
 
-The study case mentions Entity Framework v11. Compatibility depends on the selected .NET SDK and available EF Core version.
+The study case mentions Entity Framework v11 if possible. The backend project currently targets .NET 10 and uses ASP.NET Core Web API.
 
 ### Decision
 
-Document EF v11 as a target if available and compatible. Final EF version will be decided during backend setup.
+Use Entity Framework Core 10.x for the current implementation.
 
 ### Reason
 
-Avoid forcing an incompatible dependency and keep the implementation stable.
+EF Core 10 matches the current .NET 10 backend setup and keeps the project stable for the study case deadline. The project should not force a dependency version that does not match the selected SDK/runtime.
 
 ### Status
 
-Pending verification.
+Accepted.
+
+---
+
+## Decision 004: Continue Backend Workflow with Visual Studio
+
+### Context
+
+The initial backend project was created from Git Bash, but the current workflow is continued with Visual Studio.
+
+### Decision
+
+Use Visual Studio as the primary backend workflow for running the API, using Package Manager Console for EF Core commands, and using the `.http` file for manual API testing.
+
+### Reason
+
+This workflow is realistic for ASP.NET Core development on Windows and easier to demonstrate during review.
+
+### Status
+
+Accepted.
