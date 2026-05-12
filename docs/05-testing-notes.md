@@ -6,11 +6,11 @@
 
 - [x] Register with valid data
 - [x] Login with valid credentials
-- [ ] Register with duplicate email
-- [ ] Register with invalid email
-- [ ] Login with wrong password
-- [ ] Access protected endpoint without token
-- [ ] Access protected endpoint with token
+- [x] Register with duplicate email
+- [x] Register with invalid email
+- [x] Login with wrong password
+- [x] Access protected endpoint without token
+- [x] Access protected endpoint with token
 
 ### TODO CRUD
 
@@ -154,3 +154,25 @@ JWT authentication middleware works correctly for protected endpoints.
 The backend can read authenticated user claims from the token.
 
 Authentication foundation is ready before implementing TODO ownership.
+
+## Authentication Negative Test Summary
+
+Date: 2026-05-12
+
+Test cases completed:
+
+- Duplicate email registration returns `400 Bad Request`.
+- Invalid email registration returns validation error with `400 Bad Request`.
+- Login with wrong password returns `401 Unauthorized`.
+- Protected endpoint without token returns `401 Unauthorized`.
+- Protected endpoint with valid token returns authenticated user data.
+
+Result:
+
+Authentication foundation is working for both successful and failed request scenarios.
+
+Notes:
+
+The API already uses ASP.NET Core model validation through `[ApiController]`.
+Password verification uses ASP.NET Core password hashing.
+JWT is required for protected endpoints.
