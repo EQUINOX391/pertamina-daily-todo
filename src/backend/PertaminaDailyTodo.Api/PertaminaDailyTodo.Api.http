@@ -1,5 +1,6 @@
 @host = http://localhost:5190
-@token = 
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJmNTEwZDdmMS1iZjdhLTQwZDItOTA0Ny00YzBlN2VlN2Q1NTQiLCJlbWFpbCI6ImVnaUBleGFtcGxlLmNvbSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiZjUxMGQ3ZjEtYmY3YS00MGQyLTkwNDctNGMwZTdlZTdkNTU0IiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvZW1haWxhZGRyZXNzIjoiZWdpQGV4YW1wbGUuY29tIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZSI6IkVnaSBFcmxhbmdnYSIsImV4cCI6MTc3ODU4MTQ4NSwiaXNzIjoiUGVydGFtaW5hRGFpbHlUb2RvLkFwaSIsImF1ZCI6IlBlcnRhbWluYURhaWx5VG9kby5Gcm9udGVuZCJ9.IvpI_FTlFapk7eTTmXjK9E56r0I8pmWiRaJ_PbfsTRU
+@todoId = a6878ed5-f019-4814-991e-40e34bc28d75
 
 GET {{host}}/api/health
 Accept: application/json
@@ -66,4 +67,70 @@ Content-Type: application/json
 ###
 
 GET {{host}}/api/auth/me
+Accept: application/json
+
+###
+
+GET {{host}}/api/todos
+Authorization: Bearer {{token}}
+Accept: application/json
+
+###
+
+POST {{host}}/api/todos
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "title": "Belajar TODO CRUD API",
+  "description": "Implementasi endpoint Todo dengan JWT ownership",
+  "dueDateUtc": "2026-05-15T10:00:00Z"
+}
+
+###
+
+GET {{host}}/api/todos/{{todoId}}
+Authorization: Bearer {{token}}
+Accept: application/json
+
+###
+
+PUT {{host}}/api/todos/{{todoId}}
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "title": "Belajar TODO CRUD API - Updated",
+  "description": "Update todo dan tandai sebagai selesai",
+  "isCompleted": true,
+  "dueDateUtc": "2026-05-15T10:00:00Z"
+}
+
+###
+
+DELETE {{host}}/api/todos/{{todoId}}
+Authorization: Bearer {{token}}
+Accept: application/json
+
+###
+
+GET {{host}}/api/todos
+Accept: application/json
+
+###
+
+POST {{host}}/api/todos
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "title": "",
+  "description": "Todo invalid karena title kosong",
+  "dueDateUtc": "2026-05-15T10:00:00Z"
+}
+
+###
+
+GET {{host}}/api/todos/00000000-0000-0000-0000-000000000000
+Authorization: Bearer {{token}}
 Accept: application/json

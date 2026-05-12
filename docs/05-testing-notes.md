@@ -14,19 +14,20 @@
 
 ### TODO CRUD
 
-- [ ] Create TODO
-- [ ] Get TODO list
-- [ ] Get TODO detail
-- [ ] Update TODO
-- [ ] Delete TODO
-- [ ] Ensure user cannot access another user's TODO
+- [x] Create TODO
+- [x] Get TODO list
+- [x] Get TODO detail
+- [x] Update TODO
+- [x] Delete TODO
+- [x] Ensure unauthenticated user cannot access TODO endpoints
+- [x] Ensure unknown TODO ID returns not found
 
 ## API Testing Tools
 
-Planned:
+Used:
 
+- Visual Studio HTTP file
 - Swagger UI
-- Postman or HTTP file
 
 ## Backend Health Check Test
 
@@ -39,17 +40,21 @@ dotnet run --launch-profile http
 Invoke-RestMethod http://localhost:5190/api/health
 ```
 
+Result:
+
+```text
 status  service                timestampUtc
 ------  -------                ------------
 Healthy PertaminaDailyTodo.Api 2026-05-11T13:17:46.1214832Z
+```
 
 Conclusion:
 
 Backend application runs successfully using the HTTP launch profile.
-Health check endpoint /api/health is reachable.
+Health check endpoint `/api/health` is reachable.
 Controller routing is working.
 
-## Backend Database Migration Test ##
+## Backend Database Migration Test
 
 Date: 2026-05-11
 
@@ -66,13 +71,16 @@ Commands:
 Add-Migration InitialDatabase -OutputDir Data/Migrations
 Update-Database
 ```
+
 Result:
 
-Database PertaminaDailyTodoDb created successfully.
+Database `PertaminaDailyTodoDb` created successfully.
+
 Tables created:
-Users
-TodoItems
-__EFMigrationsHistory
+
+- `Users`
+- `TodoItems`
+- `__EFMigrationsHistory`
 
 Conclusion:
 
@@ -94,8 +102,10 @@ Tooling:
 
 Endpoints tested:
 
-- `POST /api/auth/register`
-- `POST /api/auth/login`
+```http
+POST /api/auth/register
+POST /api/auth/login
+```
 
 Register request:
 
@@ -109,27 +119,17 @@ Register request:
 
 Expected result:
 
-API returns JWT token.
-API returns authenticated user data.
-Password is stored as a hash in the Users table.
-Plain text password is not stored.
+- API returns JWT token.
+- API returns authenticated user data.
+- Password is stored as a hash in the `Users` table.
+- Plain text password is not stored.
 
-Conclusion:
+Result:
 
 Register endpoint works.
 Login endpoint works.
 JWT token generation works.
 Password hashing works.
-
-## Pending Authentication Tests
-
-These tests should be completed before moving to TODO CRUD:
-
-- Register with duplicate email should return `400 Bad Request`.
-- Register with invalid email should return validation error.
-- Login with wrong password should return `401 Unauthorized`.
-- Protected endpoint without token should return `401 Unauthorized`.
-- Protected endpoint with valid token should return authenticated user data.
 
 ## Authentication Protected Endpoint Test
 
@@ -141,11 +141,24 @@ Endpoint tested:
 GET /api/auth/me
 ```
 
+Authentication:
+
+```http
+Authorization: Bearer <token>
+```
+
 Test cases:
 
 - [x] Request with valid token returns authenticated user data.
 - [x] Request without valid token returns `401 Unauthorized`.
 - [x] Authenticated user response contains `id`, `fullName`, and `email`.
+
+Expected results:
+
+| Test Case | Expected Result |
+|---|---|
+| GET `/api/auth/me` with valid token | `200 OK` |
+| GET `/api/auth/me` without token | `401 Unauthorized` |
 
 Result:
 
@@ -176,3 +189,99 @@ Notes:
 The API already uses ASP.NET Core model validation through `[ApiController]`.
 Password verification uses ASP.NET Core password hashing.
 JWT is required for protected endpoints.
+
+## TODO CRUD Protected Endpoint Test
+
+Date: 2026-05-12
+
+Tooling:
+
+- Visual Studio 2022
+- ASP.NET Core Web API
+- SQL Server LocalDB
+- JWT Bearer Authentication
+- Visual Studio HTTP file
+
+Endpoints tested:
+
+```http
+GET /api/todos
+GET /api/todos/{id}
+POST /api/todos
+PUT /api/todos/{id}
+DELETE /api/todos/{id}
+```
+
+Authentication:
+
+```http
+Authorization: Bearer <token>
+```
+
+Test cases:
+
+1. Request all todos with a valid token.
+2. Create a todo with a valid token and valid request body.
+3. Get created todo by ID.
+4. Update created todo by ID.
+5. Delete created todo by ID.
+6. Get deleted todo by ID.
+7. Request todo endpoint without token.
+8. Request todo with an unknown ID.
+9. Create todo with invalid title.
+
+Expected results:
+
+| Test Case | Expected Result |
+|---|---|
+| GET `/api/todos` with valid token | `200 OK` |
+| POST `/api/todos` with valid body | `201 Created` |
+| GET `/api/todos/{id}` with valid token | `200 OK` |
+| PUT `/api/todos/{id}` with valid body | `200 OK` |
+| DELETE `/api/todos/{id}` | `204 No Content` |
+| GET deleted todo by ID | `404 Not Found` |
+| GET `/api/todos` without token | `401 Unauthorized` |
+| GET unknown todo ID | `404 Not Found` |
+| POST `/api/todos` with invalid title | `400 Bad Request` |
+
+Example create request:
+
+```json
+{
+  "title": "Belajar TODO CRUD API",
+  "description": "Implementasi endpoint Todo dengan JWT ownership",
+  "dueDateUtc": "2026-05-15T10:00:00Z"
+}
+```
+
+Example update request:
+
+```json
+{
+  "title": "Belajar TODO CRUD API - Updated",
+  "description": "Update todo dan tandai sebagai selesai",
+  "isCompleted": true,
+  "dueDateUtc": "2026-05-15T10:00:00Z"
+}
+```
+
+Result:
+
+TODO CRUD API works correctly with JWT authentication.
+
+The API can create, read, update, and delete todos for the authenticated user.
+
+Todo ownership is enforced by filtering all operations using the authenticated user's ID from the JWT token.
+
+The client does not provide `userId` in the request body. Todo ownership is assigned by the backend.
+
+Protected Todo endpoints reject unauthenticated requests.
+
+Invalid Todo requests return validation errors.
+
+Notes:
+
+- `GET /api/todos` only returns todos owned by the authenticated user.
+- `GET /api/todos/{id}`, `PUT /api/todos/{id}`, and `DELETE /api/todos/{id}` return `404 Not Found` when the todo does not exist or does not belong to the authenticated user.
+- `POST /api/todos` returns `201 Created` when a todo is successfully created.
+- `DELETE /api/todos/{id}` returns `204 No Content` when delete succeeds.
