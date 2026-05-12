@@ -1,3 +1,5 @@
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PertaminaDailyTodo.Api.Contracts.Auth;
 using PertaminaDailyTodo.Api.Services;
@@ -49,5 +51,31 @@ public class AuthController : ControllerBase
         }
 
         return Ok(result.Data);
+    }
+
+    [Authorize]
+    [HttpGet("me")]
+    public IActionResult Me()
+    {
+        var userIdValue = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var email = User.FindFirstValue(ClaimTypes.Email);
+        var fullName = User.FindFirstValue(ClaimTypes.Name);
+
+        if (!Guid.TryParse(userIdValue, out var userId) ||
+            string.IsNullOrWhiteSpace(email) ||
+            string.IsNullOrWhiteSpace(fullName))
+        {
+            return Unauthorized(new
+            {
+                message = "Invalid authentication token."
+            });
+        }
+
+        return Ok(new UserResponse
+        {
+            Id = userId,
+            FullName = fullName,
+            Email = email
+        });
     }
 }

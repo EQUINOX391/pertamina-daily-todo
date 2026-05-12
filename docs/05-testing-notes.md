@@ -130,3 +130,27 @@ These tests should be completed before moving to TODO CRUD:
 - Login with wrong password should return `401 Unauthorized`.
 - Protected endpoint without token should return `401 Unauthorized`.
 - Protected endpoint with valid token should return authenticated user data.
+
+## Authentication Protected Endpoint Test
+
+Date: 2026-05-12
+
+Endpoint tested:
+
+```http
+GET /api/auth/me
+```
+
+Test cases:
+
+- [x] Request with valid token returns authenticated user data.
+- [x] Request without valid token returns `401 Unauthorized`.
+- [x] Authenticated user response contains `id`, `fullName`, and `email`.
+
+Result:
+
+JWT authentication middleware works correctly for protected endpoints.
+
+The backend can read authenticated user claims from the token.
+
+Authentication foundation is ready before implementing TODO ownership.

@@ -1,4 +1,5 @@
 @host = http://localhost:5190
+@token = 
 
 GET {{host}}/api/health
 Accept: application/json
@@ -23,3 +24,9 @@ Content-Type: application/json
   "email": "egi@example.com",
   "password": "Password123!"
 }
+
+###
+
+GET {{host}}/api/auth/me
+Authorization: Bearer {{token}}
+Accept: application/json
