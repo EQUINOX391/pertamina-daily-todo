@@ -60,8 +60,10 @@ npm run lint
 - Delete TODO
 - Basic loading and error states
 
-## Notes
+## Security Note
 
-JWT is stored in `localStorage` for this study case to keep the implementation simple and understandable.
+JWT is stored in `localStorage` for this study case to keep the implementation simple.
+
+For production usage, a stronger token strategy should be considered.
 
 Backend authorization remains the source of truth. The frontend route guard only improves user experience and does not replace backend JWT validation.

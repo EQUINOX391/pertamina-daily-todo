@@ -109,19 +109,27 @@ pertamina-daily-todo/
 
 ## Development Status
 
+## Development Status
+
 - [x] Step 1: Initial project structure and documentation
 - [x] Step 2: Backend project setup
 - [x] Step 3: Database and Entity Framework setup
 - [x] Step 4: Authentication API
 - [x] Step 5: Protected TODO CRUD API
 - [x] Step 6: TODO title validation hardening
-- [ ] Step 7: Backend review and cleanup
-- [ ] Step 8: Frontend setup
-- [ ] Step 9: Frontend and API integration
-- [ ] Step 10: Final testing, polish, and documentation
+- [x] Step 7: Backend review and cleanup
+- [x] Step 8: Frontend setup foundation
+- [x] Step 9: Frontend authentication integration
+- [x] Step 10: Frontend TODO CRUD integration
+- [x] Step 11: Frontend review and cleanup
+- [ ] Step 12: Final documentation cleanup
 
 ## Notes
 
-Backend setup currently uses ASP.NET Core Web API on .NET 10, Entity Framework Core 10.x, SQL Server LocalDB, and JWT Bearer authentication.
+Backend setup currently uses ASP.NET Core Web API, Entity Framework Core, SQL Server LocalDB, and JWT Bearer authentication.
 
-EF Core 10 is used for this implementation because it matches the current .NET 10 project setup.
+The frontend uses React JS with Vite, React Router, and Axios.
+
+JWT is stored in browser localStorage for this study case to keep the implementation simple and easy to understand. For production usage, a stronger token strategy should be considered.
+
+Backend validation and authorization remain the source of truth.

@@ -83,3 +83,26 @@ Next focus:
 - Reduce duplication if needed.
 - Improve documentation and README.
 - Prepare final testing checklist before submission.
+
+## Reflection: Frontend Review and Documentation Cleanup
+
+Date: 2026-05-13
+
+I reviewed the frontend implementation after completing TODO CRUD integration.
+
+The main goal was not to add new features, but to improve readability and make sure the project remains simple and understandable for a recruitment study case.
+
+I reviewed the frontend folder structure, API wrapper usage, token storage helper, protected route flow, and TODO page implementation.
+
+Some small cleanup was done, such as reducing duplicated API error handling logic, removing unused template files, and updating the frontend README so it reflects the actual project instead of the default Vite template.
+
+I decided not to split the TODO page into too many smaller components yet because the current scope is still small. Keeping it as one page is acceptable for the deadline, as long as the logic remains readable.
+
+This step helped prepare the project for final review without overengineering the frontend.
+
+Next focus:
+
+- Run final lint and build checks.
+- Review Git status.
+- Make sure `.env` files are not committed.
+- Prepare the repository before sharing it for review.
