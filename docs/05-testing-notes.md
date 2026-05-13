@@ -473,3 +473,80 @@ Frontend authentication integration works correctly.
 The React frontend can communicate with the ASP.NET Core backend through CORS, submit login and register requests, store JWT tokens, and protect frontend routes based on authentication state.
 
 Full TODO CRUD UI integration will be implemented in the next step.
+
+## Frontend TODO CRUD Integration Test
+
+Date: 2026-05-13
+
+### Scope
+
+Frontend TODO CRUD integration with protected ASP.NET Core Web API endpoints.
+
+### Backend Endpoints Tested From Frontend
+
+```txt
+GET /api/todos
+POST /api/todos
+PUT /api/todos/{id}
+DELETE /api/todos/{id}
+```
+
+### Authentication Requirement
+
+All TODO endpoints require JWT authentication.
+
+The frontend sends the JWT token through the Axios request interceptor using:
+
+```txt
+Authorization: Bearer <token>
+```
+
+### Positive Test Cases
+
+```txt
+Authenticated user can load their TODO list.
+Authenticated user can create a new TODO.
+Created TODO appears in the list without browser refresh.
+Authenticated user can mark TODO as completed.
+Authenticated user can mark completed TODO back as pending.
+Authenticated user can edit TODO title.
+Authenticated user can edit TODO description.
+Authenticated user can edit TODO due date.
+Authenticated user can cancel edit mode without saving changes.
+Authenticated user can delete a TODO after confirmation.
+Deleted TODO is removed from the list without browser refresh.
+```
+
+### Negative Test Cases
+
+```txt
+Accessing /todos without token redirects user to /login.
+Invalid token redirects user to /login.
+Creating TODO with empty title shows validation error.
+Creating TODO with title longer than 150 characters is prevented by input limit and backend validation.
+Creating TODO with description longer than 1000 characters is prevented by input limit and backend validation.
+Editing TODO with empty title shows validation error.
+Editing TODO with description longer than 1000 characters is prevented by input limit and backend validation.
+Canceling delete confirmation keeps the TODO item.
+```
+
+### UI Behavior Checked
+
+```txt
+Loading state is shown while fetching TODO list.
+Empty state is shown when user has no TODO items.
+Error message is shown when API request fails.
+Create button shows loading state during submit.
+Update button shows loading state during status update.
+Delete button shows loading state during delete.
+Edit form appears only for the selected TODO item.
+Long TODO title and description wrap properly inside the card.
+```
+
+### Result
+
+Frontend TODO CRUD integration works correctly.
+
+The React frontend can now display, create, update, complete, edit, and delete TODO items owned by the authenticated user.
+
+Backend JWT authorization remains the source of truth for protected TODO data.

@@ -181,3 +181,39 @@ Backend JWT middleware remains responsible for real authorization.
 The frontend can now authenticate users and access protected frontend routes after login or register.
 
 The next implementation step can focus on integrating the TODO list page with protected TODO CRUD endpoints.
+
+## Decision: Keep TODO CRUD Frontend State Local
+
+Date: 2026-05-13
+
+### Context
+
+The frontend needs to support authenticated TODO CRUD operations integrated with the ASP.NET Core Web API backend.
+
+### Decision
+
+Use local React component state in `TodoListPage` for TODO CRUD interaction.
+
+### Reason
+
+The study case scope is small and only has one main TODO page. Local state keeps the implementation simple, readable, and realistic for the deadline.
+
+The frontend handles:
+
+```txt
+Loading state
+Error state
+Create form state
+Edit form state
+Updating item state
+Deleting item state
+TODO list state
+```
+
+### Consequence
+
+No additional state management library is introduced.
+
+This avoids overengineering while still keeping the code organized through API wrapper functions and utility files.
+
+If the application grows, the TODO state can later be moved into custom hooks or a dedicated data-fetching layer.

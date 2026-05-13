@@ -64,3 +64,22 @@ Next focus:
 - Display TODO items on the frontend.
 - Implement create TODO form.
 - Continue with update and delete TODO integration.
+
+## Reflection: Frontend TODO CRUD Integration
+
+Date: 2026-05-13
+
+Today I integrated the TODO list page with the protected backend TODO API.
+
+I implemented loading TODO items, creating new TODO items, updating completed status, editing TODO details, and deleting TODO items. All TODO API requests use the JWT token through the Axios HTTP client interceptor.
+
+I also tested several important scenarios, including empty state, invalid token handling, validation errors, long text layout behavior, delete confirmation, and local UI updates after API success.
+
+One important finding was that UI validation and layout behavior must be tested with edge cases such as long title and long description input. The backend remains the source of truth for validation and ownership protection.
+
+Next focus:
+
+- Review frontend code readability.
+- Reduce duplication if needed.
+- Improve documentation and README.
+- Prepare final testing checklist before submission.

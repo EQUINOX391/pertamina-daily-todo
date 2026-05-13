@@ -74,6 +74,7 @@ Local development database:
 ```text
 Server=(localdb)\MSSQLLocalDB
 Database=PertaminaDailyTodoDb
+```
 
 ## Frontend Architecture Plan
 
@@ -81,7 +82,6 @@ The frontend is structured by responsibility to keep the project simple, clean, 
 
 ### Folder Structure
 
-```txt
 src/frontend/src/
 ├── api/
 ├── components/
@@ -96,7 +96,6 @@ src/frontend/src/
 ├── App.jsx
 ├── index.css
 └── main.jsx
-```
 
 ### Responsibility
 
@@ -198,3 +197,77 @@ The current implementation stores JWT in localStorage for simplicity and study c
 This approach is easy to implement, but it has security trade-offs because localStorage can be accessed by JavaScript running in the browser. For a production system, additional protections such as stronger XSS prevention, short token lifetime, refresh token strategy, or HttpOnly cookie-based authentication should be considered.
 
 The backend remains the source of truth for protected data access.
+
+## Frontend TODO CRUD Flow
+
+The TODO list page integrates with protected backend TODO endpoints.
+
+### Data Loading Flow
+
+```txt
+User opens /todos
+ProtectedRoute checks token existence
+TodoListPage calls getTodos()
+Axios interceptor attaches JWT token
+Backend validates JWT token
+Backend returns TODO items owned by authenticated user
+Frontend renders TODO list, empty state, loading state, or error state
+```
+
+### Create TODO Flow
+
+```txt
+User fills create TODO form
+Frontend validates title and description
+Frontend sends POST /api/todos
+Backend validates JWT token and request body
+Backend creates TODO owned by authenticated user
+Frontend reloads TODO list
+```
+
+### Update Status Flow
+
+```txt
+User clicks Mark as Completed or Mark as Pending
+Frontend sends PUT /api/todos/{id}
+Frontend includes existing title, description, due date, and updated isCompleted value
+Backend validates ownership and updates TODO
+Frontend updates the item in local state
+```
+
+### Edit TODO Flow
+
+```txt
+User clicks Edit
+Frontend shows inline edit form for selected TODO
+User updates title, description, or due date
+Frontend validates input
+Frontend sends PUT /api/todos/{id}
+Backend validates ownership and updates TODO
+Frontend replaces the updated item in local state
+```
+
+### Delete TODO Flow
+
+```txt
+User clicks Delete
+Browser confirmation is shown
+If confirmed, frontend sends DELETE /api/todos/{id}
+Backend validates ownership and deletes TODO
+Frontend removes the deleted item from local state
+```
+
+### Frontend State Strategy
+
+The current implementation uses React local component state.
+
+This is acceptable for the study case scope because:
+
+```txt
+The app is small.
+The data flow is easy to understand.
+The deadline is limited.
+No global state management is needed yet.
+```
+
+A larger production application could consider a dedicated data-fetching or state management library.
