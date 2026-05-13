@@ -375,3 +375,42 @@ Actions taken:
 Result:
 
 Backend is cleaner and ready for final backend retesting before moving to frontend setup.
+
+## Frontend Foundation Smoke Test
+
+Date: 2026-05-13
+
+### Scope
+
+Frontend setup and routing foundation.
+
+### Items Tested
+
+```txt
+npm install
+npm run dev
+```
+
+### Routes Checked
+
+```txt
+http://localhost:5173/login
+http://localhost:5173/register
+http://localhost:5173/todos
+```
+
+### Expected Result
+
+```txt
+/login displays Login placeholder page.
+/register displays Register placeholder page.
+/todos redirects to /login when no access token exists.
+```
+
+### Result
+
+Frontend foundation works correctly.
+
+The React application can run locally, routing is configured, and protected route behavior is working at the frontend level.
+
+Backend API integration and real form submission will be implemented in the next step.

@@ -95,3 +95,48 @@ This workflow is realistic for ASP.NET Core development on Windows and easier to
 ### Status
 
 Accepted.
+
+
+## Decision: Use React with Vite for Frontend Setup
+
+Date: 2026-05-13
+
+### Context
+
+The project requires a React JS frontend integrated with an ASP.NET Core Web API backend using JWT authentication.
+
+### Decision
+
+Use React JS with Vite for the frontend foundation.
+
+### Reason
+
+Vite provides a simple and fast development setup for React applications. This keeps the frontend setup realistic for the study case deadline while still being professional and maintainable.
+
+### Consequence
+
+The frontend project is located in:
+
+```txt
+src/frontend
+```
+
+The frontend uses:
+
+```txt
+react
+react-router
+axios
+vite
+```
+
+The initial frontend scope is limited to:
+
+- Project setup.
+- Clean folder structure.
+- Routing placeholder.
+- API client foundation.
+- Token storage helper.
+- Protected route guard.
+
+Full UI implementation is intentionally deferred to the next step.

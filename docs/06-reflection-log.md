@@ -33,3 +33,21 @@ I also documented how Gen-AI is used in this project to show that it supports le
 ### Next Step
 
 Set up backend ASP.NET Core Web API project structure.
+
+
+## Reflection: Frontend Foundation Setup
+
+Date: 2026-05-13
+
+Today I started the frontend foundation after completing backend review and cleanup.
+
+The focus was not to build the full UI immediately, but to prepare a clean structure first. I created a React project using Vite, added routing with React Router, prepared an Axios HTTP client, and separated token storage logic into a utility file.
+
+This approach helps keep the frontend organized before connecting it to the backend API.
+
+Next focus:
+
+- Implement login form.
+- Integrate login with backend JWT endpoint.
+- Store token after successful login.
+- Test protected TODO page with authenticated API request.

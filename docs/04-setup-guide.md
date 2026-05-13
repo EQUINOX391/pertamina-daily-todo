@@ -117,3 +117,71 @@ To be documented after frontend project is created.
 Use `.env.example` as reference.
 
 Do not commit real `.env` files.
+
+## Frontend Setup
+
+The frontend is built using React JS with Vite.
+
+### Frontend Location
+
+```txt
+src/frontend
+```
+
+### Main Dependencies
+
+```txt
+react
+react-router
+axios
+vite
+```
+
+### Environment Configuration
+
+Create a local frontend environment file:
+
+```txt
+src/frontend/.env
+```
+
+Example value:
+
+```env
+VITE_API_BASE_URL=http://localhost:5190/api
+```
+
+The committed example file is:
+
+```txt
+src/frontend/.env.example
+```
+
+### Run Frontend Locally
+
+From the frontend folder:
+
+```powershell
+cd src/frontend
+npm install
+npm run dev
+```
+
+Default local frontend URL:
+
+```txt
+http://localhost:5173
+```
+
+### Current Frontend Foundation
+
+The frontend currently contains:
+
+- React project setup with Vite.
+- Basic route structure.
+- Login page placeholder.
+- Register page placeholder.
+- Protected TODO page placeholder.
+- Axios HTTP client foundation.
+- JWT token storage helper.
+- Protected route guard.
