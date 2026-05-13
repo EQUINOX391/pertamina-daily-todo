@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { registerUser } from "../../../api/authApi";
 import { saveAccessToken } from "../../../utils/tokenStorage";
+import { getApiErrorMessage } from "../../../utils/apiError";
 
 function RegisterPage() {
   const navigate = useNavigate();
@@ -48,23 +49,6 @@ function RegisterPage() {
     return "";
   }
 
-  function getErrorMessage(error) {
-    const responseMessage = error.response?.data?.message;
-
-    if (responseMessage) {
-      return responseMessage;
-    }
-
-    const validationErrors = error.response?.data?.errors;
-
-    if (validationErrors) {
-      const firstErrorKey = Object.keys(validationErrors)[0];
-      return validationErrors[firstErrorKey][0];
-    }
-
-    return "Registration failed. Please check your input.";
-  }
-
   async function handleSubmit(event) {
     event.preventDefault();
 
@@ -90,7 +74,9 @@ function RegisterPage() {
 
       navigate("/todos", { replace: true });
     } catch (error) {
-      setErrorMessage(getErrorMessage(error));
+      setErrorMessage(
+        getApiErrorMessage(error, "Registration failed. Please check your input.")
+      );
     } finally {
       setIsSubmitting(false);
     }

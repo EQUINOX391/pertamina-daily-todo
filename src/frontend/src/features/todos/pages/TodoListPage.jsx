@@ -7,6 +7,7 @@ import {
   updateTodo,
 } from "../../../api/todoApi";
 import { removeAccessToken } from "../../../utils/tokenStorage";
+import { getApiErrorMessage } from "../../../utils/apiError";
 
 const TODO_TITLE_MAX_LENGTH = 150;
 const TODO_DESCRIPTION_MAX_LENGTH = 1000;
@@ -62,7 +63,11 @@ function TodoListPage() {
   }, [handleUnauthorized]);
 
   useEffect(() => {
-    loadTodos();
+    async function loadInitialTodos() {
+      await loadTodos();
+    }
+
+    void loadInitialTodos();
   }, [loadTodos]);
 
   function handleChange(event) {
@@ -100,23 +105,6 @@ function TodoListPage() {
     }
 
     return "";
-  }
-
-  function getErrorMessage(error, fallbackMessage) {
-    const responseMessage = error.response?.data?.message;
-
-    if (responseMessage) {
-      return responseMessage;
-    }
-
-    const validationErrors = error.response?.data?.errors;
-
-    if (validationErrors) {
-      const firstErrorKey = Object.keys(validationErrors)[0];
-      return validationErrors[firstErrorKey][0];
-    }
-
-    return fallbackMessage;
   }
 
   function buildDueDateUtc(dateValue) {
@@ -173,7 +161,7 @@ function TodoListPage() {
       }
 
       setCreateErrorMessage(
-        getErrorMessage(error, "Failed to create TODO. Please try again.")
+        getApiErrorMessage(error, "Failed to create TODO. Please try again.")
       );
     } finally {
       setIsCreating(false);
@@ -242,7 +230,7 @@ function TodoListPage() {
       }
 
       setEditErrorMessage(
-        getErrorMessage(error, "Failed to update TODO. Please try again.")
+        getApiErrorMessage(error, "Failed to update TODO. Please try again.")
       );
     } finally {
       setUpdatingTodoId(null);
@@ -273,7 +261,7 @@ function TodoListPage() {
       }
 
       setErrorMessage(
-        getErrorMessage(error, "Failed to update TODO status. Please try again.")
+        getApiErrorMessage(error, "Failed to update TODO status. Please try again.")
       );
     } finally {
       setUpdatingTodoId(null);
@@ -305,7 +293,7 @@ function TodoListPage() {
       }
 
       setErrorMessage(
-        getErrorMessage(error, "Failed to delete TODO. Please try again.")
+        getApiErrorMessage(error, "Failed to delete TODO. Please try again.")
       );
     } finally {
       setDeletingTodoId(null);

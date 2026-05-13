@@ -550,3 +550,79 @@ Frontend TODO CRUD integration works correctly.
 The React frontend can now display, create, update, complete, edit, and delete TODO items owned by the authenticated user.
 
 Backend JWT authorization remains the source of truth for protected TODO data.
+
+## Frontend Code Review and Cleanup Test
+
+Date: 2026-05-13
+
+### Scope
+
+Frontend code readability review after TODO CRUD integration.
+
+### Items Reviewed
+
+```txt
+src/frontend/src/api
+src/frontend/src/features/auth
+src/frontend/src/features/todos
+src/frontend/src/layouts
+src/frontend/src/routes
+src/frontend/src/utils
+src/frontend/src/index.css
+```
+
+### Findings
+
+- Frontend folder structure is readable and already separated by responsibility.
+- API request logic is separated into API wrapper files.
+- JWT token access is separated into a token storage utility.
+- TODO CRUD page is still acceptable as one page component for the current study case scope.
+- API error parsing logic was duplicated in multiple frontend pages.
+- Some default Vite template files were still tracked but unused.
+- One unused API wrapper function existed for TODO detail fetching.
+- Frontend documentation still contained default Vite template content.
+
+### Actions Taken
+
+- Added shared `getApiErrorMessage` utility.
+- Reused the shared API error helper in login, register, and TODO pages.
+- Removed unused `getTodoById` frontend API function.
+- Removed unused Vite template files.
+- Removed unused CSS block.
+- Updated frontend README with project-specific information.
+
+### Commands To Run
+
+```powershell
+cd src/frontend
+npm run lint
+npm run build
+```
+
+### Expected Result
+
+```txt
+Lint check passes.
+Production build succeeds.
+Existing login, register, and TODO CRUD behavior remains unchanged.
+```
+
+### Manual Retest Checklist
+
+- [ ] Login with valid account still works.
+- [ ] Register with valid account still works.
+- [ ] Login error message still appears for invalid credentials.
+- [ ] Register error message still appears for invalid input.
+- [ ] TODO list still loads after login.
+- [ ] Create TODO still works.
+- [ ] Edit TODO still works.
+- [ ] Toggle TODO status still works.
+- [ ] Delete TODO still works.
+- [ ] Invalid token still redirects user to login.
+- [ ] Long TODO title and description still wrap properly.
+
+### Result
+
+Frontend cleanup was limited to readability and small duplication reduction.
+
+No major feature was added during this step.

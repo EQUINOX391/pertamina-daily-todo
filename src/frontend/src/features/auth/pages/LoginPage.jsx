@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { loginUser } from "../../../api/authApi";
 import { saveAccessToken } from "../../../utils/tokenStorage";
+import { getApiErrorMessage } from "../../../utils/apiError";
 
 function LoginPage() {
   const navigate = useNavigate();
@@ -35,23 +36,6 @@ function LoginPage() {
     return "";
   }
 
-  function getErrorMessage(error) {
-    const responseMessage = error.response?.data?.message;
-
-    if (responseMessage) {
-      return responseMessage;
-    }
-
-    const validationErrors = error.response?.data?.errors;
-
-    if (validationErrors) {
-      const firstErrorKey = Object.keys(validationErrors)[0];
-      return validationErrors[firstErrorKey][0];
-    }
-
-    return "Login failed. Please check your email and password.";
-  }
-
   async function handleSubmit(event) {
     event.preventDefault();
 
@@ -76,7 +60,12 @@ function LoginPage() {
 
       navigate("/todos", { replace: true });
     } catch (error) {
-      setErrorMessage(getErrorMessage(error));
+      setErrorMessage(
+        getApiErrorMessage(
+          error,
+          "Login failed. Please check your email and password."
+        )
+      );
     } finally {
       setIsSubmitting(false);
     }

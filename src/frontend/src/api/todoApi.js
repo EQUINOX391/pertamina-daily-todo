@@ -5,11 +5,6 @@ export async function getTodos() {
   return response.data;
 }
 
-export async function getTodoById(id) {
-  const response = await httpClient.get(`/todos/${id}`);
-  return response.data;
-}
-
 export async function createTodo(payload) {
   const response = await httpClient.post("/todos", payload);
   return response.data;
