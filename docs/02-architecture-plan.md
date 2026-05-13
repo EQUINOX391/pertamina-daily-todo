@@ -143,3 +143,58 @@ Protected backend endpoint validates JWT
 Protected frontend routes are guarded using a `ProtectedRoute` component.
 
 For the current foundation, route protection checks whether an access token exists in local storage. Backend validation remains the source of truth for protected data access.
+
+## Frontend Authentication Flow
+
+The frontend authentication flow uses JWT access tokens returned by the backend authentication endpoints.
+
+### Login Flow
+
+```txt
+User submits login form
+Frontend validates required fields
+Frontend sends POST /api/auth/login
+Backend validates credentials
+Backend returns JWT token and user data
+Frontend stores JWT token in localStorage
+Frontend redirects user to /todos
+```
+
+### Register Flow
+
+```txt
+User submits register form
+Frontend validates full name, email, and password
+Frontend sends POST /api/auth/register
+Backend creates user account
+Backend returns JWT token and user data
+Frontend stores JWT token in localStorage
+Frontend redirects user to /todos
+```
+
+### Protected Route Flow
+
+```txt
+User opens /todos
+ProtectedRoute checks whether access token exists
+If token exists, TODO page is shown
+If token does not exist, user is redirected to /login
+```
+
+### API Request Flow
+
+```txt
+Frontend calls API wrapper function
+Axios HTTP client reads token from token storage
+Axios interceptor attaches Authorization header
+Backend validates JWT token
+Backend returns protected resource
+```
+
+### Security Awareness
+
+The current implementation stores JWT in localStorage for simplicity and study case practicality.
+
+This approach is easy to implement, but it has security trade-offs because localStorage can be accessed by JavaScript running in the browser. For a production system, additional protections such as stronger XSS prevention, short token lifetime, refresh token strategy, or HttpOnly cookie-based authentication should be considered.
+
+The backend remains the source of truth for protected data access.

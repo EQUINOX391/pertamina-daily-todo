@@ -51,3 +51,16 @@ Next focus:
 - Integrate login with backend JWT endpoint.
 - Store token after successful login.
 - Test protected TODO page with authenticated API request.
+
+I started by adding a CORS policy in the backend because the frontend and backend run on different local origins during development. After that, I implemented the login and register forms, connected them to the API wrapper functions, stored the JWT token, and redirected authenticated users to the protected TODO page.
+
+I also tested positive and negative authentication scenarios from the browser.
+
+This step helped connect the backend authentication foundation with the frontend application flow.
+
+Next focus:
+
+- Fetch authenticated user's TODO list.
+- Display TODO items on the frontend.
+- Implement create TODO form.
+- Continue with update and delete TODO integration.

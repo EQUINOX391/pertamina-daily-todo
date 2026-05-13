@@ -414,3 +414,62 @@ Frontend foundation works correctly.
 The React application can run locally, routing is configured, and protected route behavior is working at the frontend level.
 
 Backend API integration and real form submission will be implemented in the next step.
+
+## Frontend Authentication Integration Test
+
+Date: 2026-05-13
+
+### Scope
+
+Frontend authentication integration with ASP.NET Core Web API backend.
+
+### Backend Requirement
+
+The backend was updated with a CORS policy to allow requests from the local Vite frontend development server.
+
+```txt
+Frontend origin: http://localhost:5173
+Backend origin:  http://localhost:5190
+```
+
+### Items Tested
+
+```txt
+POST /api/auth/login
+POST /api/auth/register
+Frontend login form
+Frontend register form
+JWT token storage
+Protected route access
+Logout flow
+```
+
+### Positive Test Cases
+
+```txt
+Login with valid account returns JWT token.
+Register with new email returns JWT token.
+JWT token is stored in browser localStorage.
+User is redirected to /todos after successful login.
+User is redirected to /todos after successful register.
+Protected /todos page can be opened when token exists.
+Logout removes token and redirects user to /login.
+```
+
+### Negative Test Cases
+
+```txt
+Login with wrong password shows an error message.
+Register without full name shows frontend validation error.
+Register with password shorter than 8 characters shows frontend validation error.
+Register with already registered email shows backend error message.
+Accessing /todos without token redirects user to /login.
+```
+
+### Result
+
+Frontend authentication integration works correctly.
+
+The React frontend can communicate with the ASP.NET Core backend through CORS, submit login and register requests, store JWT tokens, and protect frontend routes based on authentication state.
+
+Full TODO CRUD UI integration will be implemented in the next step.

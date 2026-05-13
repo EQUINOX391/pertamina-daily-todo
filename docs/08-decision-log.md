@@ -140,3 +140,44 @@ The initial frontend scope is limited to:
 - Protected route guard.
 
 Full UI implementation is intentionally deferred to the next step.
+
+## Decision: Add Frontend Authentication Integration
+
+Date: 2026-05-13
+
+### Context
+
+The project requires a React frontend that integrates with the ASP.NET Core Web API authentication endpoints using JWT stateless authentication.
+
+### Decision
+
+Implement login and register integration in the frontend using:
+
+```txt
+React form state
+Axios API wrappers
+JWT token storage helper
+ProtectedRoute component
+Backend CORS policy
+```
+
+### Reason
+
+This keeps the authentication flow simple, understandable, and realistic for the study case deadline.
+
+The implementation separates responsibilities:
+
+```txt
+Pages handle user interaction.
+API wrappers handle backend communication.
+Token storage helper handles local token access.
+Axios interceptor attaches JWT to protected requests.
+ProtectedRoute handles frontend route protection.
+Backend JWT middleware remains responsible for real authorization.
+```
+
+### Consequence
+
+The frontend can now authenticate users and access protected frontend routes after login or register.
+
+The next implementation step can focus on integrating the TODO list page with protected TODO CRUD endpoints.

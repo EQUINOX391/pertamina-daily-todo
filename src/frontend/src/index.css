@@ -117,3 +117,71 @@ button {
     padding: 24px 16px;
   }
 }
+
+.page-title {
+  margin-bottom: 24px;
+}
+
+  .page-title h2 {
+    margin-bottom: 8px;
+  }
+
+  .page-title p {
+    margin: 0;
+    color: #6b7280;
+  }
+
+.auth-page {
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.auth-form {
+  display: grid;
+  gap: 18px;
+}
+
+.form-group {
+  display: grid;
+  gap: 8px;
+}
+
+  .form-group label {
+    font-weight: 700;
+  }
+
+  .form-group input {
+    width: 100%;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-size: 16px;
+  }
+
+    .form-group input:focus {
+      outline: 3px solid rgba(185, 28, 28, 0.18);
+      border-color: #b91c1c;
+    }
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.alert {
+  margin-bottom: 20px;
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-weight: 600;
+}
+
+.alert-error {
+  border: 1px solid #fecaca;
+  background: #fef2f2;
+  color: #991b1b;
+}
+
+.auth-link {
+  margin-top: 20px;
+  color: #6b7280;
+}

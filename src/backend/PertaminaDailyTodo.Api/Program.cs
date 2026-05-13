@@ -8,6 +8,8 @@ using PertaminaDailyTodo.Api.Data;
 using PertaminaDailyTodo.Api.Entities;
 using PertaminaDailyTodo.Api.Services;
 
+const string FrontendCorsPolicy = "FrontendCorsPolicy";
+
 var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
@@ -28,6 +30,17 @@ builder.Services.Configure<JwtOptions>(
 
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(FrontendCorsPolicy, policy =>
+    {
+        policy
+            .WithOrigins("http://localhost:5173")
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
@@ -67,6 +80,8 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
+
+app.UseCors(FrontendCorsPolicy);
 
 app.UseAuthentication();
 app.UseAuthorization();
